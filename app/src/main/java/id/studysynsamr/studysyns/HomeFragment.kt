@@ -65,6 +65,7 @@ class HomeFragment : Fragment() {
                 else -> "Belum Selesai"
             }
             shareBuilder.append("${index + 1}. ${task.judulTugas}\n")
+            shareBuilder.append("   Deskripsi: ${task.deskripsi ?: "-"}\n")
             shareBuilder.append("   Batas: $dateStr\n")
             shareBuilder.append("   Status: $statusStr\n\n")
         }

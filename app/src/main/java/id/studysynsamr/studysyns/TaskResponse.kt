@@ -8,6 +8,6 @@ data class TaskResponse(
     @SerializedName("judul_tugas") val judulTugas: String,
     val deskripsi: String?,
     @SerializedName("batas_waktu") val batasWaktu: String?,
-    @SerializedName("status_selesai") val statusSelesai: Boolean,
+    val status: String,
     val sumber: String
 )

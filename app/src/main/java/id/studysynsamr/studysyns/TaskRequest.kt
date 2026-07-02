@@ -7,5 +7,6 @@ data class TaskRequest(
     @SerializedName("judul_tugas") val judulTugas: String,
     val deskripsi: String?,
     @SerializedName("batas_waktu") val batasWaktu: String?,
-    val sumber: String = "manual"
+    val sumber: String = "manual",
+    val status: String? = null
 )

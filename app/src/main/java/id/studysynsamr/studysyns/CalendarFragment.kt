@@ -80,28 +80,43 @@ class CalendarFragment : Fragment() {
         tvDesc.text = task.deskripsi ?: "Tidak ada deskripsi"
         tvDate.text = formatIsoDate(task.batasWaktu)
         
-        if (task.statusSelesai) {
+        if (task.status == "SELESAI") {
             tvStatus.text = "Selesai"
             tvStatus.setBackgroundResource(R.drawable.bg_status_done)
-            btnMarkDone.visibility = View.GONE
+        } else if (task.status == "PROSES") {
+            tvStatus.text = "Sedang Proses"
+            tvStatus.setBackgroundResource(R.drawable.bg_status_pending)
         } else {
             tvStatus.text = "Belum Selesai"
             tvStatus.setBackgroundResource(R.drawable.bg_status_pending)
-            btnMarkDone.visibility = View.VISIBLE
         }
+        btnMarkDone.visibility = View.VISIBLE
 
         btnMarkDone.setOnClickListener {
-            val map = mapOf("status_selesai" to true)
-            NetworkClient.apiService.updateTaskStatus(task.id, map).enqueue(object : Callback<TaskResponse> {
-                override fun onResponse(call: Call<TaskResponse>, response: Response<TaskResponse>) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(requireContext(), "Tugas ditandai selesai", Toast.LENGTH_SHORT).show()
-                        bottomSheetDialog.dismiss()
-                        fetchTasks()
-                    }
+            val statusOptions = arrayOf("Belum Selesai", "Sedang Proses", "Selesai")
+            val statusValues = arrayOf("BELUM_SELESAI", "PROSES", "SELESAI")
+            var checkedItem = statusValues.indexOf(task.status)
+            if (checkedItem == -1) checkedItem = 0
+
+            androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setTitle("Ubah Status Tugas")
+                .setSingleChoiceItems(statusOptions, checkedItem) { dialog, which ->
+                    val selectedStatus = statusValues[which]
+                    val map = mapOf("status" to selectedStatus)
+                    NetworkClient.apiService.updateTaskStatus(task.id, map).enqueue(object : Callback<TaskResponse> {
+                        override fun onResponse(call: Call<TaskResponse>, response: Response<TaskResponse>) {
+                            if (response.isSuccessful) {
+                                Toast.makeText(requireContext(), "Status diperbarui", Toast.LENGTH_SHORT).show()
+                                dialog.dismiss()
+                                bottomSheetDialog.dismiss()
+                                fetchTasks()
+                            }
+                        }
+                        override fun onFailure(call: Call<TaskResponse>, t: Throwable) {}
+                    })
                 }
-                override fun onFailure(call: Call<TaskResponse>, t: Throwable) {}
-            })
+                .setNegativeButton("Batal", null)
+                .show()
         }
 
         btnDelete.setOnClickListener {
@@ -276,6 +291,8 @@ class CalendarFragment : Fragment() {
             rvTasks.visibility = View.VISIBLE
             taskAdapter.updateData(tasksForDate)
         }
+    }
+
     private fun formatIsoDate(isoDate: String?): String {
         if (isoDate.isNullOrEmpty()) return "-"
         return try {

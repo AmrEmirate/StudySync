@@ -1,8 +1,10 @@
 package id.studysynsamr.studysyns
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
@@ -18,6 +20,7 @@ class TaskAdapter(
         val tvDeskripsi: TextView = itemView.findViewById(R.id.tv_deskripsi)
         val tvTanggal: TextView = itemView.findViewById(R.id.tv_tanggal)
         val tvStatus: TextView = itemView.findViewById(R.id.tv_status)
+        val ivShare: ImageView = itemView.findViewById(R.id.iv_share)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -61,6 +64,17 @@ class TaskAdapter(
 
         holder.itemView.setOnClickListener {
             onItemClick?.invoke(task)
+        }
+
+        holder.ivShare.setOnClickListener {
+            val shareText = "Tugas: ${task.judulTugas}\nDeskripsi: ${task.deskripsi ?: "-"}\n${holder.tvTanggal.text}\nStatus: ${holder.tvStatus.text}"
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, shareText)
+                type = "text/plain"
+            }
+            val shareIntent = Intent.createChooser(sendIntent, "Bagikan tugas ke...")
+            holder.itemView.context.startActivity(shareIntent)
         }
     }
 

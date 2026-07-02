@@ -1,6 +1,7 @@
 package id.studysynsamr.studysyns
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -43,6 +44,38 @@ class HomeFragment : Fragment() {
         binding.fabAddTask.setOnClickListener {
             showAddTaskDialog()
         }
+
+        binding.ivShareAll.setOnClickListener {
+            shareAllTasks()
+        }
+    }
+
+    private fun shareAllTasks() {
+        if (allTasks.isEmpty()) {
+            Toast.makeText(requireContext(), "Tidak ada tugas untuk dibagikan", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val shareBuilder = java.lang.StringBuilder("Daftar Tugas Saya:\n\n")
+        allTasks.forEachIndexed { index, task ->
+            val dateStr = formatIsoDate(task.batasWaktu)
+            val statusStr = when(task.status) {
+                "SELESAI" -> "Selesai"
+                "PROSES" -> "Sedang Proses"
+                else -> "Belum Selesai"
+            }
+            shareBuilder.append("${index + 1}. ${task.judulTugas}\n")
+            shareBuilder.append("   Batas: $dateStr\n")
+            shareBuilder.append("   Status: $statusStr\n\n")
+        }
+
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, shareBuilder.toString().trimEnd())
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, "Bagikan semua tugas ke...")
+        startActivity(shareIntent)
     }
 
     private fun showAddTaskDialog() {

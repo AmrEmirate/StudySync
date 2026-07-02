@@ -19,12 +19,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
+import org.json.JSONObject
 
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
     private var currentUserId: Int = -1
+    private var currentIdentitasRaw: String? = null
 
     private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
@@ -75,6 +77,10 @@ class ProfileFragment : Fragment() {
         binding.btnEditIdentitas.setOnClickListener {
             showEditIdentitasDialog()
         }
+        
+        binding.btnChangePassword.setOnClickListener {
+            showChangePasswordDialog()
+        }
 
         binding.btnLogout.setOnClickListener {
             with(sharedPref.edit()) {
@@ -96,7 +102,15 @@ class ProfileFragment : Fragment() {
                     binding.tvProfileEmail.text = user.email
                     
                     user.identitas?.let {
-                        binding.tvIdentitasInfo.text = it
+                        currentIdentitasRaw = it
+                        try {
+                            val jsonObj = JSONObject(it)
+                            val sekolah = jsonObj.optString("sekolah", "")
+                            val nim = jsonObj.optString("nim", "")
+                            binding.tvIdentitasInfo.text = "Sekolah: $sekolah\nNIM/NISN: $nim"
+                        } catch(e: Exception) {
+                            binding.tvIdentitasInfo.text = it
+                        }
                     }
 
                     user.profilePicture?.let { base64 ->
@@ -134,10 +148,10 @@ class ProfileFragment : Fragment() {
         })
     }
 
-    private fun updateUserProfile(profilePicture: String? = null, identitas: String? = null) {
+    private fun updateUserProfile(profilePicture: String? = null, identitas: String? = null, namaLengkap: String? = null, password: String? = null) {
         if (currentUserId == -1) return
         
-        val request = ProfileUpdateRequest(profilePicture, identitas)
+        val request = ProfileUpdateRequest(profilePicture, identitas, namaLengkap, password)
         NetworkClient.apiService.updateUserProfile(currentUserId, request).enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
@@ -158,25 +172,60 @@ class ProfileFragment : Fragment() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_edit_identitas, null)
         bottomSheetDialog.setContentView(dialogView)
 
-        val etIdentitas = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.et_identitas)
+        val etName = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.et_edit_name)
+        val etSchool = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.et_edit_school)
+        val etNim = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.et_edit_nim)
         val btnSave = dialogView.findViewById<android.widget.Button>(R.id.btn_save_identitas)
 
         // Pre-fill
-        val currentIdentitas = binding.tvIdentitasInfo.text.toString()
-        if (currentIdentitas != "Belum ada identitas sekolah.") {
-            etIdentitas.setText(currentIdentitas)
-        }
-
-        btnSave.setOnClickListener {
-            val identitas = etIdentitas.text.toString()
-            if (identitas.isNotEmpty()) {
-                updateUserProfile(identitas = identitas)
-                bottomSheetDialog.dismiss()
-            } else {
-                Toast.makeText(requireContext(), "Identitas tidak boleh kosong", Toast.LENGTH_SHORT).show()
+        etName.setText(binding.tvProfileName.text)
+        currentIdentitasRaw?.let {
+            try {
+                val jsonObj = JSONObject(it)
+                etSchool.setText(jsonObj.optString("sekolah", ""))
+                etNim.setText(jsonObj.optString("nim", ""))
+            } catch(e: Exception) {
+                etSchool.setText(it)
             }
         }
 
+        btnSave.setOnClickListener {
+            val name = etName.text.toString()
+            val school = etSchool.text.toString()
+            val nim = etNim.text.toString()
+
+            if (name.isNotEmpty() && school.isNotEmpty()) {
+                val json = JSONObject()
+                json.put("sekolah", school)
+                json.put("nim", nim)
+                
+                updateUserProfile(namaLengkap = name, identitas = json.toString())
+                bottomSheetDialog.dismiss()
+            } else {
+                Toast.makeText(requireContext(), "Nama dan Sekolah wajib diisi", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        bottomSheetDialog.show()
+    }
+    
+    private fun showChangePasswordDialog() {
+        val bottomSheetDialog = com.google.android.material.bottomsheet.BottomSheetDialog(requireContext())
+        val dialogView = layoutInflater.inflate(R.layout.dialog_change_password, null)
+        bottomSheetDialog.setContentView(dialogView)
+
+        val etNewPassword = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.et_new_password)
+        val btnSave = dialogView.findViewById<android.widget.Button>(R.id.btn_save_password)
+
+        btnSave.setOnClickListener {
+            val password = etNewPassword.text.toString()
+            if (password.length >= 6) {
+                updateUserProfile(password = password)
+                bottomSheetDialog.dismiss()
+            } else {
+                Toast.makeText(requireContext(), "Kata sandi minimal 6 karakter", Toast.LENGTH_SHORT).show()
+            }
+        }
         bottomSheetDialog.show()
     }
 

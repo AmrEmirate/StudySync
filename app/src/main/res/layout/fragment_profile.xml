@@ -53,99 +53,123 @@
         android:textColor="@color/gray_dark"
         android:textSize="16sp" />
 
+    <!-- Settings List -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="32dp"
         android:background="@drawable/bottom_sheet_bg"
-        android:elevation="2dp"
-        android:padding="16dp">
+        android:elevation="2dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Identitas"
-            android:textStyle="bold"
-            android:textColor="@color/navy_dark"
-            android:layout_marginBottom="8dp"/>
-
-        <TextView
-            android:id="@+id/tv_identitas_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Belum ada identitas sekolah."
-            android:textColor="@color/gray_text"/>
-
-        <Button
+        <!-- Identitas Row -->
+        <LinearLayout
             android:id="@+id/btn_edit_identitas"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit Identitas"
-            android:layout_gravity="end"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/bottom_sheet_bg"
-        android:elevation="2dp"
-        android:padding="16dp">
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Integrasi API Sekolah"
-            android:textStyle="bold"
-            android:textColor="@color/navy_dark"
-            android:layout_marginBottom="8dp"/>
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+            
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_myplaces"
+                app:tint="@color/navy_dark"/>
+                
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Data Diri &amp; Sekolah"
+                android:textColor="@color/navy_dark"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+                
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_media_play"
+                app:tint="@color/gray_text"/>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_api_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Belum terintegrasi secara manual."
-            android:textColor="@color/gray_text"/>
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_color" android:layout_marginHorizontal="16dp"/>
 
-        <Button
+        <!-- API Row -->
+        <LinearLayout
             android:id="@+id/btn_setup_api"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Atur Integrasi"
-            android:layout_gravity="end"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/bottom_sheet_bg"
-        android:elevation="2dp"
-        android:padding="16dp">
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Keamanan"
-            android:textStyle="bold"
-            android:textColor="@color/navy_dark"
-            android:layout_marginBottom="8dp"/>
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+            
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_share"
+                app:tint="@color/navy_dark"/>
+                
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Integrasi API Sekolah"
+                android:textColor="@color/navy_dark"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+                
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_media_play"
+                app:tint="@color/gray_text"/>
+        </LinearLayout>
 
-        <Button
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_color" android:layout_marginHorizontal="16dp"/>
+
+        <!-- Keamanan Row -->
+        <LinearLayout
             android:id="@+id/btn_change_password"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ubah Kata Sandi"
-            android:textColor="@color/primary_blue"
-            android:layout_gravity="end"/>
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+            
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_lock_idle_lock"
+                app:tint="@color/navy_dark"/>
+                
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Ubah Kata Sandi"
+                android:textColor="@color/navy_dark"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+                
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_media_play"
+                app:tint="@color/gray_text"/>
+        </LinearLayout>
     </LinearLayout>
 
     <Button

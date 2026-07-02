@@ -110,14 +110,7 @@ class ProfileFragment : Fragment() {
                     
                     user.identitas?.let {
                         currentIdentitasRaw = it
-                        try {
-                            val jsonObj = JSONObject(it)
-                            val sekolah = jsonObj.optString("sekolah", "")
-                            val nim = jsonObj.optString("nim", "")
-                            binding.tvIdentitasInfo.text = "Sekolah: $sekolah\nNIM/NISN: $nim"
-                        } catch(e: Exception) {
-                            binding.tvIdentitasInfo.text = it
-                        }
+                        // Data identitas disimpan untuk pre-fill dialog
                     }
 
                     user.profilePicture?.let { base64 ->
@@ -148,7 +141,7 @@ class ProfileFragment : Fragment() {
             override fun onResponse(call: Call<SchoolIntegrationResponse>, response: Response<SchoolIntegrationResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     val integration = response.body()!!
-                    binding.tvApiInfo.text = "Terhubung ke: ${integration.endpointUrl}"
+                    // Integrasi API disimpan atau diproses jika perlu
                 }
             }
             override fun onFailure(call: Call<SchoolIntegrationResponse>, t: Throwable) {}
@@ -255,7 +248,6 @@ class ProfileFragment : Fragment() {
                     override fun onResponse(call: Call<SchoolIntegrationResponse>, response: Response<SchoolIntegrationResponse>) {
                         if (response.isSuccessful) {
                             Toast.makeText(requireContext(), "Integrasi disimpan", Toast.LENGTH_SHORT).show()
-                            binding.tvApiInfo.text = "Terhubung ke: $url"
                             bottomSheetDialog.dismiss()
                         } else {
                             Toast.makeText(requireContext(), "Gagal menyimpan", Toast.LENGTH_SHORT).show()

@@ -29,6 +29,18 @@
             android:exported="false"
             android:theme="@style/Theme.StudySyns">
         </activity>
+
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false"
+            android:theme="@style/Theme.StudySyns">
+        </activity>
+
+        <activity
+            android:name=".VerifyOtpActivity"
+            android:exported="false"
+            android:theme="@style/Theme.StudySyns">
+        </activity>
     </application>
 
 </manifest>

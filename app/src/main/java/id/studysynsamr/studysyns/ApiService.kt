@@ -41,5 +41,5 @@ interface ApiService {
     fun updateUserProfile(@Path("id") userId: Int, @Body request: ProfileUpdateRequest): Call<UserResponse>
 
     @retrofit2.http.PUT("api/tasks/{id}/status")
-    fun updateTaskStatus(@Path("id") taskId: Int, @Body request: Map<String, Boolean>): Call<TaskResponse>
+    fun updateTaskStatus(@Path("id") taskId: Int, @Body request: Map<String, String>): Call<TaskResponse>
 }

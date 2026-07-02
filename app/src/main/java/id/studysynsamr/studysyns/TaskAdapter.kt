@@ -44,12 +44,19 @@ class TaskAdapter(
             holder.tvTanggal.text = "Batas: -"
         }
 
-        if (task.statusSelesai) {
-            holder.tvStatus.text = "Selesai"
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_status_done)
-        } else {
-            holder.tvStatus.text = "Belum Selesai"
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_status_pending)
+        when (task.status) {
+            "SELESAI" -> {
+                holder.tvStatus.text = "Selesai"
+                holder.tvStatus.setBackgroundResource(R.drawable.bg_status_done)
+            }
+            "PROSES" -> {
+                holder.tvStatus.text = "Sedang Proses"
+                holder.tvStatus.setBackgroundResource(R.drawable.bg_status_pending)
+            }
+            else -> {
+                holder.tvStatus.text = "Belum Selesai"
+                holder.tvStatus.setBackgroundResource(R.drawable.bg_status_pending)
+            }
         }
 
         holder.itemView.setOnClickListener {

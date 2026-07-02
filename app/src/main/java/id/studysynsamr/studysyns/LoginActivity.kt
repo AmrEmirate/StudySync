@@ -60,9 +60,7 @@ class LoginActivity : AppCompatActivity() {
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        // Prefill dengan data dummy untuk kemudahan testing
-        binding.etEmail.setText("dummy@studysyns.com")
-        binding.etPassword.setText("password123")
+        // Kolom email dan password dibiarkan kosong
 
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString()

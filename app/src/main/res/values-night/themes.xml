@@ -2,6 +2,16 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.StudySyns" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/primary_light</item>
+        <item name="colorOnPrimaryContainer">@color/primary_blue</item>
+        <item name="colorSurface">@color/card_background</item>
+        <item name="colorOnSurface">@color/navy_dark</item>
+        <item name="android:colorBackground">@color/gray_light</item>
+        <item name="android:statusBarColor">@color/primary_blue</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
+
+    <style name="Theme.StudySyns" parent="Base.Theme.StudySyns" />
 </resources>

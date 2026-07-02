@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Invert standard black and white for dark mode -->
+    <color name="black">#FFFFFFFF</color>
+    <color name="white">#FF121212</color>
+
+    <!-- Primary brand colors stay similar but slightly adjusted for contrast if needed -->
+    <color name="primary_blue">#3B82F6</color>
+    <color name="primary_light">#1E3A8A</color>
+
+    <!-- Main text color (navy_dark in light mode) becomes a light gray/white -->
+    <color name="navy_dark">#F8FAFC</color>
+
+    <!-- Main background color (gray_light in light mode) becomes a dark slate -->
+    <color name="gray_light">#0F172A</color>
+
+    <!-- Secondary text colors become lighter -->
+    <color name="gray_text">#94A3B8</color>
+    <color name="gray_dark">#CBD5E1</color>
+
+    <!-- Card backgrounds and dividers -->
+    <color name="card_background">#1E293B</color>
+    <color name="divider_color">#334155</color>
+
+    <!-- Status colors stay mostly the same but slightly more vibrant for dark backgrounds -->
+    <color name="red_dot">#F87171</color>
+    <color name="green_success">#34D399</color>
+    <color name="orange_warning">#FBBF24</color>
+</resources>

@@ -221,8 +221,8 @@ class HomeFragment : Fragment() {
 
     private fun filterTasks(tabIndex: Int) {
         val filteredList = when (tabIndex) {
-            0 -> allTasks // Hari Ini (Untuk saat ini tampilkan semua yang aktif, bisa diubah filter by date)
-            1 -> allTasks // Minggu Ini
+            0 -> allTasks.filter { !it.statusSelesai } // Belum Selesai
+            1 -> emptyList() // Proses (Belum didukung oleh database)
             2 -> allTasks.filter { it.statusSelesai } // Selesai
             else -> allTasks
         }

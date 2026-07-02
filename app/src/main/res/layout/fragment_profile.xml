@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_light"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <FrameLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp">
+        
+        <ImageView
+            android:id="@+id/iv_profile_picture"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circle_bg"
+            android:clipToOutline="true"
+            android:src="@android:drawable/ic_menu_camera" />
+            
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="bottom|end"
+            android:background="@drawable/circle_bg"
+            android:src="@android:drawable/ic_menu_edit"
+            android:padding="6dp"
+            app:tint="@color/primary_blue"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:text="Nama Pengguna"
+        android:textColor="@color/navy_dark"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_profile_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:text="email@domain.com"
+        android:textColor="@color/gray_dark"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bottom_sheet_bg"
+        android:elevation="2dp"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Identitas"
+            android:textStyle="bold"
+            android:textColor="@color/navy_dark"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_identitas_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Belum ada identitas sekolah."
+            android:textColor="@color/gray_text"/>
+
+        <Button
+            android:id="@+id/btn_edit_identitas"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Identitas"
+            android:layout_gravity="end"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bottom_sheet_bg"
+        android:elevation="2dp"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Integrasi API Sekolah"
+            android:textStyle="bold"
+            android:textColor="@color/navy_dark"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_api_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Belum terintegrasi secara manual."
+            android:textColor="@color/gray_text"/>
+
+        <Button
+            android:id="@+id/btn_setup_api"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Atur Integrasi"
+            android:layout_gravity="end"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_logout"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="48dp"
+        android:text="Keluar"
+        android:textColor="@android:color/holo_red_dark"
+        app:strokeColor="@android:color/holo_red_dark" />
+
+</LinearLayout>

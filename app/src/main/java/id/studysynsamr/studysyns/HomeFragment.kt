@@ -109,7 +109,7 @@ class HomeFragment : Fragment() {
 
         tvTitle.text = task.judulTugas
         tvDesc.text = task.deskripsi ?: "Tidak ada deskripsi"
-        tvDate.text = task.batasWaktu ?: "-"
+        tvDate.text = formatIsoDate(task.batasWaktu)
         
         if (task.statusSelesai) {
             tvStatus.text = "Selesai"
@@ -263,6 +263,17 @@ class HomeFragment : Fragment() {
                 Log.e("HomeFragment", "API Error", t)
             }
         })
+    }
+
+    private fun formatIsoDate(isoDate: String?): String {
+        if (isoDate.isNullOrEmpty()) return "-"
+        return try {
+            val zonedDateTime = java.time.ZonedDateTime.parse(isoDate)
+            val formatter = java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm")
+            zonedDateTime.format(formatter)
+        } catch (e: Exception) {
+            isoDate
+        }
     }
 
     override fun onDestroyView() {

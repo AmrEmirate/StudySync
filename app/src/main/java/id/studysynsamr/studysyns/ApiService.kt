@@ -10,6 +10,12 @@ interface ApiService {
     @POST("api/auth/login")
     fun login(@Body request: LoginRequest): Call<UserResponse>
 
+    @POST("api/auth/forgot-password")
+    fun forgotPassword(@Body request: ForgotPasswordRequest): Call<MessageResponse>
+
+    @POST("api/auth/reset-password")
+    fun resetPassword(@Body request: ResetPasswordRequest): Call<MessageResponse>
+
     @POST("api/auth/register")
     fun register(@Body request: RegisterRequest): Call<RegisterResponse>
 

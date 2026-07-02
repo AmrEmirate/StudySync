@@ -78,6 +78,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.tvForgotPassword.setOnClickListener {
+            showForgotPasswordDialog()
+        }
+
         binding.btnGoogleLogin.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             googleSignInLauncher.launch(signInIntent)
@@ -161,5 +165,89 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish() 
+    }
+
+    private fun showForgotPasswordDialog() {
+        val bottomSheetDialog = com.google.android.material.bottomsheet.BottomSheetDialog(this)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_forgot_password, null)
+        bottomSheetDialog.setContentView(dialogView)
+
+        val etEmail = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.et_forgot_email)
+        val btnSendOtp = dialogView.findViewById<android.widget.Button>(R.id.btn_send_otp)
+
+        btnSendOtp.setOnClickListener {
+            val email = etEmail.text.toString()
+            if (email.isNotEmpty()) {
+                btnSendOtp.isEnabled = false
+                btnSendOtp.text = "Mengirim..."
+                
+                val request = ForgotPasswordRequest(email)
+                NetworkClient.apiService.forgotPassword(request).enqueue(object : Callback<MessageResponse> {
+                    override fun onResponse(call: Call<MessageResponse>, response: Response<MessageResponse>) {
+                        btnSendOtp.isEnabled = true
+                        btnSendOtp.text = "Kirim Kode OTP"
+                        if (response.isSuccessful) {
+                            Toast.makeText(this@LoginActivity, "OTP terkirim ke email", Toast.LENGTH_SHORT).show()
+                            bottomSheetDialog.dismiss()
+                            showResetPasswordDialog(email)
+                        } else {
+                            Toast.makeText(this@LoginActivity, "Email tidak terdaftar", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<MessageResponse>, t: Throwable) {
+                        btnSendOtp.isEnabled = true
+                        btnSendOtp.text = "Kirim Kode OTP"
+                        Toast.makeText(this@LoginActivity, "Koneksi gagal", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            } else {
+                Toast.makeText(this, "Email tidak boleh kosong", Toast.LENGTH_SHORT).show()
+            }
+        }
+        bottomSheetDialog.show()
+    }
+
+    private fun showResetPasswordDialog(email: String) {
+        val bottomSheetDialog = com.google.android.material.bottomsheet.BottomSheetDialog(this)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_reset_password, null)
+        bottomSheetDialog.setContentView(dialogView)
+
+        val etOtp = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.et_reset_otp)
+        val etNewPassword = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.et_reset_new_password)
+        val btnReset = dialogView.findViewById<android.widget.Button>(R.id.btn_reset_password)
+
+        btnReset.setOnClickListener {
+            val otp = etOtp.text.toString()
+            val newPassword = etNewPassword.text.toString()
+
+            if (otp.length == 6 && newPassword.length >= 6) {
+                btnReset.isEnabled = false
+                btnReset.text = "Memproses..."
+
+                val request = ResetPasswordRequest(email, otp, newPassword)
+                NetworkClient.apiService.resetPassword(request).enqueue(object : Callback<MessageResponse> {
+                    override fun onResponse(call: Call<MessageResponse>, response: Response<MessageResponse>) {
+                        btnReset.isEnabled = true
+                        btnReset.text = "Reset Kata Sandi"
+                        if (response.isSuccessful) {
+                            Toast.makeText(this@LoginActivity, "Kata sandi berhasil direset", Toast.LENGTH_SHORT).show()
+                            bottomSheetDialog.dismiss()
+                        } else {
+                            Toast.makeText(this@LoginActivity, "OTP salah", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<MessageResponse>, t: Throwable) {
+                        btnReset.isEnabled = true
+                        btnReset.text = "Reset Kata Sandi"
+                        Toast.makeText(this@LoginActivity, "Koneksi gagal", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            } else {
+                Toast.makeText(this, "OTP harus 6 digit & sandi minimal 6 karakter", Toast.LENGTH_SHORT).show()
+            }
+        }
+        bottomSheetDialog.show()
     }
 }

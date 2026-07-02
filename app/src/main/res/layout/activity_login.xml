@@ -88,6 +88,19 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/tv_forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Lupa Kata Sandi?"
+        android:textColor="@color/primary_blue"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@id/til_password"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <Button
         android:id="@+id/btn_login"
         android:layout_width="0dp"
@@ -102,7 +115,7 @@
         app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_password" />
+        app:layout_constraintTop_toBottomOf="@id/tv_forgot_password" />
 
     <TextView
         android:id="@+id/tv_register_link"

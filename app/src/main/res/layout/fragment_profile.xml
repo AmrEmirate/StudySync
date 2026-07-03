@@ -20,6 +20,7 @@
             android:scaleType="centerCrop"
             android:background="@drawable/circle_bg"
             android:clipToOutline="true"
+            android:contentDescription="Foto Profil"
             android:src="@android:drawable/ic_menu_camera" />
             
         <ImageView
@@ -29,6 +30,7 @@
             android:background="@drawable/circle_bg"
             android:src="@android:drawable/ic_menu_edit"
             android:padding="6dp"
+            android:contentDescription="Edit Profil"
             app:tint="@color/primary_blue"/>
     </FrameLayout>
 
@@ -78,6 +80,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_myplaces"
+                android:contentDescription="Ikon Data Diri"
                 app:tint="@color/navy_dark"/>
                 
             <TextView
@@ -94,6 +97,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_media_play"
+                android:contentDescription="Tanda Panah Data Diri"
                 app:tint="@color/gray_text"/>
         </LinearLayout>
 
@@ -115,6 +119,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_share"
+                android:contentDescription="Ikon Integrasi API"
                 app:tint="@color/navy_dark"/>
                 
             <TextView
@@ -131,6 +136,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_media_play"
+                android:contentDescription="Tanda Panah Integrasi API"
                 app:tint="@color/gray_text"/>
         </LinearLayout>
 
@@ -152,6 +158,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_lock_idle_lock"
+                android:contentDescription="Ikon Ubah Sandi"
                 app:tint="@color/navy_dark"/>
                 
             <TextView
@@ -168,6 +175,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_media_play"
+                android:contentDescription="Tanda Panah Ubah Sandi"
                 app:tint="@color/gray_text"/>
         </LinearLayout>
     </LinearLayout>
